@@ -44,6 +44,7 @@ function pnlCalc() {
     var importSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Import")
     if (!importSheet)
         throw("Couldn't find sheet 'Import' ... please import GLBSE data in a sheet named 'Import'")
+    SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(importSheet)
   
     // Find column indices
     var lastRow = importSheet.getLastRow()
@@ -126,14 +127,15 @@ function pnlCalc() {
     
     // Prep PNL sheet
     SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(pnlSheet)
-    pnlSheet.appendRow(['asset', 'shares', 'invested', 'dividend', '24hAvgPrice'])
+    pnlSheet.appendRow(['asset', 'shares', 'invested', 'dividend', '24hAvgPrice', '5dAvgPrice'])
     pnlSheet.getRange("1:1").setFontWeight("bold");
     pnlSheet.setFrozenRows(1);
 
     // Populate PNL sheet with one line per ticker
     for (var tickerName in tickersByName) {
         if (tickersByName.hasOwnProperty(tickerName)) {
-            var avg = ''
+            var avg1 = ''
+            var avg5 = ''
             var tick = tickersByName[tickerName]
 
             // Fetch live data from GLBSE API
@@ -158,15 +160,19 @@ function pnlCalc() {
                                 "t7davg":0,
                             }
                         */
-                        avg = json.t24havg
-                        if ('undefined' == typeof(avg))
-                            avg = ''
+                        avg1 = json.t24havg
+                        if ('undefined' == typeof(avg1))
+                            avg1 = ''
+
+                        avg5 = json.t5davg
+                        if ('undefined' == typeof(avg5))
+                            avg5 = ''
                     }
                 }
             }
 
             // Store result in spreadsheet
-            pnlSheet.appendRow([tickerName, tick.shrs, -tick.amnt, -tick.divp, avg*1e-8])
+            pnlSheet.appendRow([tickerName, tick.shrs, -tick.amnt, -tick.divp, avg1*1e-8, avg5*1e-8])
         }
     }
 }
