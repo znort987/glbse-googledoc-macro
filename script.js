@@ -19,7 +19,7 @@ function findCol(
         if (name.toString()==content.toString())
             return i
     }
-    throw("Couldn't locat column " + name + " in sheet 'Import'")
+    throw("Couldn't locate column " + name + " in sheet 'Import'")
 }
 
 // Compute profit and loss
