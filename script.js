@@ -86,7 +86,10 @@ function pnlCalc() {
             ticker(tick).divp -= amnt
             ticker('GLBSE_CASH').amnt += amnt
         }
-        else if(type == 'sell') {
+        else if(
+            (type == 'sellback') ||
+            (type == 'sell')
+        ) {
             amnt *= shrs;
             ticker(tick).shrs -= shrs
             ticker(tick).amnt -= amnt
