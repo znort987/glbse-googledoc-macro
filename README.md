@@ -29,7 +29,7 @@ Go to : Menu->Scripts->'P&L Calculator'
 Watch it operate (it's not particularly fast, but gets the job done).
 
 Once it's done, a new sheet called 'PNL' should have appeared in your spreadsheet
-that cointains a per-ticker summary of what happened in your account.
+that contains a per-ticker summary of what happened in your account.
 
 Next time around:
 
