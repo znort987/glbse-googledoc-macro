@@ -31,7 +31,7 @@ function pnlCalc() {
         tickerName
     ) {
         var tick = tickersByName[tickerName]
-        if (typeof(tick) == 'undefined') {
+        if ('undefined' == typeof(tick)) {
             tick = tickersByName[tickerName] = {}
             tick.amnt = 0
             tick.shrs = 0
@@ -124,17 +124,50 @@ function pnlCalc() {
     }    
     pnlSheet.clear()
     
-    // Populate PNL sheet with results gathered
-    pnlSheet.appendRow(['asset', 'shares', 'invested', 'dividend'])
+    // Prep PNL sheet
+    SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(pnlSheet)
+    pnlSheet.appendRow(['asset', 'shares', 'invested', 'dividend', '24hAvgPrice'])
     pnlSheet.getRange("1:1").setFontWeight("bold");
     pnlSheet.setFrozenRows(1);
 
+    // Populate PNL sheet with one line per ticker
     for (var tickerName in tickersByName) {
         if (tickersByName.hasOwnProperty(tickerName)) {
+            var avg = ''
             var tick = tickersByName[tickerName]
-            pnlSheet.appendRow([tickerName, tick.shrs, -tick.amnt, -tick.divp])
+
+            // Fetch live data from GLBSE API
+            var json = UrlFetchApp.fetch("https://glbse.com/api/asset/" + tickerName)
+            if ('undefined' != typeof(json)) {
+                json = json.getContentText()
+                if (0<json.length) {
+                    json = Utilities.jsonParse(json)
+                    if ('undefined' != typeof(json)) {
+                        /*
+                            {
+                                "ask":0
+                                "bid":0,
+                                "btc_vol_total":0,
+                                "latest_trade":0,
+                                "max":0,
+                                "min":0,
+                                "t24havg":0,
+                                "t24hvol":0,
+                                "t5davg":0,
+                                "t5dvol":0,
+                                "t7davg":0,
+                            }
+                        */
+                        avg = json.t24havg
+                        if ('undefined' == typeof(avg))
+                            avg = ''
+                    }
+                }
+            }
+
+            // Store result in spreadsheet
+            pnlSheet.appendRow([tickerName, tick.shrs, -tick.amnt, -tick.divp, avg*1e-8])
         }
     }
 }
-  
 
