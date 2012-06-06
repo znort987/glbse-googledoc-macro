@@ -1,5 +1,5 @@
 
-// Google Docs JS Macro to process fetch a GLBSE tciker
+// Google Docs JS Macro to process fetch a GLBSE ticker
 // Written by znort987@yahoo.com, tips to: 1ZnortsoStC1zSTXbW6CUtkvqew8czMMG
 
 function fetchTicker(
