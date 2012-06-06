@@ -1,7 +1,6 @@
 
 // Google Docs JS Macro to process GLBSE .CSV account export
-
-// Written by znort987@yahoo.com, send tips to: 1ZnortsoStC1zSTXbW6CUtkvqew8czMMG
+// Written by znort987@yahoo.com, tips to: 1ZnortsoStC1zSTXbW6CUtkvqew8czMMG
 
 // Install new menu entry in spreadsheet
 function onOpen() {

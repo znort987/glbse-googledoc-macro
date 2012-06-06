@@ -1,0 +1,27 @@
+
+How to use the fetchTicker macro
+================================
+
+    . Go and create a new spreadsheet document in Google Docs
+    . Go to Menu->Tools->Script Editor
+    . A new window open that lets you edit code
+    . Delete all of the existing code in there and paste the code found in file fetchTicker.js
+    . Press the 'Save' button above the code (the stylized floppy disk icon)
+    . Press the 'Run' button (stylized '>')
+
+At this point, you can go back to your spreadsheet window,
+and enter formulas that use the fetchTicker call.
+
+For example, in cell A1, you can enter:
+
+    =fetchTicker("COGNITIVE", "ask")/100000000
+
+And you should see the current ask for COGNITIVE appeat in cell A1
+
+Improvements and tips at 1ZnortsoStC1zSTXbW6CUtkvqew8czMMG are welcome
+
+Enjoy
+
+    - Znort987
+
+
